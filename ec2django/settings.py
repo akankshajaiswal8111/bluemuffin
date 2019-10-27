@@ -140,7 +140,8 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
+#STATIC_ROOT = S3_URL + STATIC_DIRECTORY
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -155,10 +156,49 @@ SITE_ID = 1
 #ACCOUNT_FIRSTNAME_REQUIRED = True
 ACCOUNT_FORMS = {'signup':'users.forms.CustomUserCreationForm'}
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
+#AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+#AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = 'AKIA37C3XY54CGCFKVSF'
+AWS_SECRET_ACCESS_KEY = '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'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_STORAGE_BUCKET_NAME = 'ajbucket8'
+AWS_S3_REGION_NAME = 'us-west-1'
+
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+STATICFILES_LOCATION = 'static'
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_LOCATION = 'static'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+#AWS_S3_FILE_OVERWRITE = False
+#AWS_DEFAULT_ACL = 'public-read' 
+MEDIAFILES_LOCATION =  'media'
+#MEDIA_DIRECTORY = 'media'
+#MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIA_DIRECTORY)
+#MEDIA_ROOT = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIA_DIRECTORY)
+#MEDIA_URL = '/media/'
+
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+        )
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+CDN_DOMAIN = 'dihhaoyfz46p4.cloudfront.net'
+
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+#STATIC_DIRECTORY = '/static/'
+#MEDIA_DIRECTORY = '/media/'
+#STATIC_URL = S3_URL + STATIC_DIRECTORY
+#STATIC_ROOT = S3_URL + STATIC_DIRECTORY
+#MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+MAX_UPLOAD_SIZE = 10485760

@@ -1,0 +1,17 @@
+{% block content %}
+  <ul>
+    <li>
+      <a href="{% url 'model_form_upload' %}">Model Form Upload</a>
+    </li>
+  </ul>
+
+  <p>Uploaded files:</p>
+  <ul>
+    {% for obj in files %}
+      <li>
+        <a href="{{ obj.document.file.url }}">{{ obj.document.description }}</a>
+        <small>(Uploaded at: {{ obj.created_at }})</small>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

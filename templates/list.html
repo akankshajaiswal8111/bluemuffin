@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+	<title>Bluemuffin.com</title>
+	<h1>Welcome {{ fname}} {{ lname}}</h1>
+    </head>
+    <body>
+    <!-- List of uploaded documents -->
+    {% if documents %}
+    <ul>
+        {% for document in documents %}
+	<li><a href="{{ document.file.url }}">{{document.description}}</a></li>
+	<a href="/user/delete/{{ document.id }}">Delete</a>
+	<a href="/user/update/{{ document.id }}">Edit</a>
+	{% endfor %}
+    </ul>
+    {% else %}
+        <p>No documents.</p>
+    {% endif %}
+	<a href="{% url 'model_form_upload' %}">Upload New File</a>
+        <!-- Upload form. Note enctype attribute! -->
+    </body>
+</html> 
